@@ -8,10 +8,9 @@ qt_add_executable(${EXE_NAME}
     main.cpp
 )
 
-qt_add_qml_module(${EXE_NAME}
-    URI QtQuickTemplate
-    VERSION 1.0
-    QML_FILES
+qt_add_resources(${EXE_NAME} "qml_resources"
+    PREFIX "/"
+    FILES
         qml/Main.qml
 )
 

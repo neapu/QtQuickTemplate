@@ -58,9 +58,6 @@ echo "==> 替换项目名称: '$TEMPLATE_NAME' → '$PROJECT_NAME'"
 # CMakeLists.txt（根目录）：project(QtQuickTemplate ...)
 replace_in_file "CMakeLists.txt"
 
-# src/CMakeLists.txt：URI QtQuickTemplate
-replace_in_file "src/CMakeLists.txt"
-
 # AndroidManifest.xml：package、label、lib_name
 replace_in_file "src/android/AndroidManifest.xml"
 

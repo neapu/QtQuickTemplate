@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
-    engine.loadFromModule("QtQuickTemplate", "Main");
+    engine.load(QUrl(QStringLiteral("qrc:/qml/Main.qml")));
 
     return QCoreApplication::exec();
 }
