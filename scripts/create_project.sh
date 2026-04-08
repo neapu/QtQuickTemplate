@@ -5,10 +5,12 @@ TEMPLATE_NAME="QtQuickTemplate"
 DEFAULT_REPO="https://github.com/neapu/QtQuickTemplate"
 DEFAULT_BRANCH="master"
 
-# ── 参数解析（支持命令行参数或交互式输入）────────────────────
+# ── 参数解析 ─────────────────────────────────────────────────
+# 用法: create_project.sh [项目名称] [分支] [仓库地址]
+# 仓库地址仅支持命令行参数，不提供则使用默认值；名称和分支支持交互式输入
 PROJECT_NAME="${1:-}"
 BRANCH="${2:-}"
-REPO_URL="${3:-}"
+REPO_URL="${3:-$DEFAULT_REPO}"
 
 if [[ -z "$PROJECT_NAME" ]]; then
     read -rp "项目名称: " PROJECT_NAME
@@ -21,11 +23,6 @@ fi
 if [[ -z "$BRANCH" ]]; then
     read -rp "拉取分支 [${DEFAULT_BRANCH}]: " BRANCH
     BRANCH="${BRANCH:-$DEFAULT_BRANCH}"
-fi
-
-if [[ -z "$REPO_URL" ]]; then
-    read -rp "仓库地址 [${DEFAULT_REPO}]: " REPO_URL
-    REPO_URL="${REPO_URL:-$DEFAULT_REPO}"
 fi
 
 # ── 克隆仓库 ─────────────────────────────────────────────────
