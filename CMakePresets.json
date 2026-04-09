@@ -20,6 +20,19 @@
         "name": "debug",
         "displayName": "Debug Build",
         "inherits": "default"
+    },{
+        "name": "release-win64",
+        "displayName": "Release Build (Win64)",
+        "inherits": "default",
+        "generator": "Visual Studio 18 2026",
+        "cacheVariables": {
+            "CMAKE_BUILD_TYPE": "Release"
+        }
+    },{
+        "name": "debug-win64",
+        "displayName": "Debug Build (Win64)",
+        "inherits": "default",
+        "generator": "Visual Studio 18 2026"
     }],
     "buildPresets": [{
         "name": "release",
@@ -29,6 +42,14 @@
         "name": "debug",
         "displayName": "Build Debug",
         "configurePreset": "debug"
+    },{
+        "name": "release-win64",
+        "displayName": "Build Release (Win64)",
+        "configurePreset": "release-win64"
+    },{
+        "name": "debug-win64",
+        "displayName": "Build Debug (Win64)",
+        "configurePreset": "debug-win64"
     }]
 
 }
