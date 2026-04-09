@@ -43,14 +43,17 @@ Write-Host ""
 git clone --branch $Branch $RepoUrl $TargetDir
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 Set-Location $TargetDir
+# 同步 .NET 进程工作目录，确保 [System.IO.File] 等方法路径正确
+[System.Environment]::CurrentDirectory = (Get-Location).Path
 
 # ── 替换项目名称 ─────────────────────────────────────────────
 function Update-ProjectName([string]$FilePath) {
     if (Test-Path $FilePath) {
-        $content = [System.IO.File]::ReadAllText($FilePath, [System.Text.Encoding]::UTF8)
+        $AbsPath = (Resolve-Path $FilePath).Path
+        $content = [System.IO.File]::ReadAllText($AbsPath, [System.Text.Encoding]::UTF8)
         $content = $content -replace [regex]::Escape($TemplateName), $ProjectName
         [System.IO.File]::WriteAllText(
-            (Resolve-Path $FilePath).Path,
+            $AbsPath,
             $content,
             (New-Object System.Text.UTF8Encoding $false)   # 无 BOM
         )
