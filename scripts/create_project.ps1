@@ -42,14 +42,16 @@ Write-Host ""
 
 git clone --branch $Branch $RepoUrl $TargetDir
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-Set-Location $TargetDir
-# 同步 .NET 进程工作目录，确保 [System.IO.File] 等方法路径正确
-[System.Environment]::CurrentDirectory = (Get-Location).Path
+
+# clone 完成后立即把绝对路径算好，不依赖后续的工作目录状态
+$AbsTargetDir = (Resolve-Path $TargetDir).Path
+Set-Location $AbsTargetDir
 
 # ── 替换项目名称 ─────────────────────────────────────────────
-function Update-ProjectName([string]$FilePath) {
-    if (Test-Path $FilePath) {
-        $AbsPath = (Resolve-Path $FilePath).Path
+function Update-ProjectName([string]$RelPath) {
+    # 用 Join-Path 拼出绝对路径，与任何工作目录设置无关
+    $AbsPath = Join-Path $AbsTargetDir $RelPath
+    if (Test-Path $AbsPath) {
         $content = [System.IO.File]::ReadAllText($AbsPath, [System.Text.Encoding]::UTF8)
         $content = $content -replace [regex]::Escape($TemplateName), $ProjectName
         [System.IO.File]::WriteAllText(
@@ -57,7 +59,7 @@ function Update-ProjectName([string]$FilePath) {
             $content,
             (New-Object System.Text.UTF8Encoding $false)   # 无 BOM
         )
-        Write-Host "    已更新: $FilePath"
+        Write-Host "    已更新: $RelPath"
     }
 }
 
