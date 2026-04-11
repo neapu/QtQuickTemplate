@@ -4,6 +4,8 @@
 
 ## 创建新项目
 
+### macOS / Linux
+
 使用以下命令从 GitHub 直接拉取模板并创建新项目：
 
 ```bash
@@ -19,6 +21,23 @@ bash <(curl -fsSL https://raw.githubusercontent.com/neapu/QtQuickTemplate/master
 ```bash
 # 拉取 android 分支
 bash <(curl -fsSL https://raw.githubusercontent.com/neapu/QtQuickTemplate/master/scripts/create_project.sh) MyApp android
+```
+
+### Windows（PowerShell）
+
+```powershell
+& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/neapu/QtQuickTemplate/master/scripts/create_project.ps1')))
+```
+
+或通过参数一次性指定：
+
+```powershell
+& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/neapu/QtQuickTemplate/master/scripts/create_project.ps1'))) -ProjectName MyApp
+```
+
+```powershell
+# 拉取 android 分支
+& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/neapu/QtQuickTemplate/master/scripts/create_project.ps1'))) -ProjectName MyApp -Branch android
 ```
 
 ## 分支说明
